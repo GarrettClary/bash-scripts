@@ -3,14 +3,15 @@
 # Edit the 'verbose' and 'script-security' configurations of the
 # PIA OpenVPN config files
 
-DIR_INPUT="$*"
+script_name="$(basename -- "$0")"
+dir_input="$*"
 
-usage_menu() {
-    echo -e "usage: ${0} [DIRECTORY]"
+usage() {
+    echo -e "usage: "$script_name" [DIRECTORY]"
 }
 
 edit_config() {
-    cd "$DIR_INPUT" || return
+    cd "$dir_input" || return
 
     for file in *.ovpn; do
         sed -i 's/verb 1/verb 3/g' "$file"
@@ -20,8 +21,8 @@ edit_config() {
     done
 }
 
-if [[ -d "$DIR_INPUT" && -r "$DIR_INPUT" ]]; then
+if [[ -d "$dir_input" && -r "$dir_input" ]]; then
     edit_config
 else
-    usage_menu
+    usage
 fi
