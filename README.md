@@ -1,4 +1,4 @@
-# BaSH scripts 
+# Bash scripts 
 ## About
 This is a small collection of simple bash scripts that will continue to refined, adjusted, and expanded.
 Everything is still in a basic testing phase.
