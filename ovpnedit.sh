@@ -3,11 +3,11 @@
 # Edit the 'verbose' and 'script-security' configurations of the
 # PIA OpenVPN config files
 
-script_name="$(basename -- "$0")"
-dir_input="$*"
+script_name=(basename -- "${0}")
+dir_input=$*
 
 usage() {
-    echo -e "usage: "$script_name" [DIRECTORY]"
+    echo -e "usage: ${script_name} [DIRECTORY]"
 }
 
 edit_config() {
@@ -21,7 +21,9 @@ edit_config() {
     done
 }
 
-if [[ -d "$dir_input" && -r "$dir_input" ]]; then
+if [ "$#" -ne 1 ]; then
+    usage
+elif [ -d "$dir_input" ]; then
     edit_config
 else
     usage
