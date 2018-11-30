@@ -1,13 +1,16 @@
 #!/bin/bash
-#
-# Edit the 'verbose' and 'script-security' configurations of the
-# PIA OpenVPN config files
 
-script_name=(basename -- "${0}")
-dir_input=$*
+set -o errexit
+set -o pipefail
+
+# Edit the 'verbose' and 'script-security' configurations of the PIA OpenVPN config files
+
+script_name="$(basename -- ${0})"
+dir_input="$*"
 
 usage() {
-    echo -e "usage: ${script_name} [DIRECTORY]"
+    echo "usage: ${script_name} [DIRECTORY]"
+    exit
 }
 
 edit_config() {
@@ -16,8 +19,8 @@ edit_config() {
     for file in *.ovpn; do
         sed -i 's/verb 1/verb 3/g' "$file"
         (echo -e "\nscript-security 2"
-         echo -e "up /etc/openvpn/update-resolv-conf"
-         echo -e "down /etc/openvpn/update-resolv-conf") >> "$file"
+         echo "up /etc/openvpn/update-resolv-conf"
+         echo "down /etc/openvpn/update-resolv-conf") >> "$file"
     done
 }
 

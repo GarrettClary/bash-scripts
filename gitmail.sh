@@ -1,12 +1,17 @@
 #!/bin/bash
 
-git_usr=$1
-out_file=$2
+# Find email addresses for GitHub users.
 
-script=(basename -- "${0}")
+set -o errexit
+set -o pipefail
+
+script="$(basename -- ${0})"
+git_usr="$1"
+out_file="$2"
 
 usage() {
-    echo -e "usage: ${script} [git_user] [out_file]"    
+    echo "usage: ${script} [git_user] [out_file]"    
+    exit 0
 }
 
 if [ "$#" -ne 2 ]; then
@@ -14,4 +19,5 @@ if [ "$#" -ne 2 ]; then
 else
     wget -O "$out_file" https://api.github.com/users/"${git_usr}"/events/public &> /dev/null
     grep email "$out_file" | sort -u
+    #grep login "$out_file" | sort -u
 fi
